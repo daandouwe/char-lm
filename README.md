@@ -42,7 +42,7 @@ Under construction
 ```
 
 # City classification
-The character language model can be used to classify text. Have a look at the `cities` dataset. For each country in the training dataset (`af`, `cn`, `de`, `fi`, `fr`, `in`, `ir`, `pk`, `za`) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
+The character language model can be used to classify text. Have a look at the [cities](https://github.com/daandouwe/char-lm/tree/master/data/cities/train) dataset. For each country in the training dataset (`af`, `cn`, `de`, `fi`, `fr`, `in`, `ir`, `pk`, `za`) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
 
 Here's an example of scores on the dev-set (true country is listed between brackets):
 ```
