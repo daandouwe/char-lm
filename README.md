@@ -36,6 +36,48 @@ Implement:
   * text-classification (trainging one lm per language)
   * grid-search on dev-set for smoothing parameters
 
+# Text classification
+The character language model can be used to classify text. Have a look at the `cities` dataset. For each country in the training dataset (`af`, `cn`, `de`, `fi`, `fr`, `in`, `ir`, `pk`, `za`) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
+
+Here's an example of scores on the dev-set (true country is listed between brackets):
+```
+harvanmaki (fi)
+  fi 9.44
+  ir 14.85
+  in 16.09
+  af 17.02
+  pk 17.29
+  za 17.72
+  de 19.81
+  cn 22.74
+  fr 32.47
+
+ditodai dano (pk)
+  in 13.65
+  za 14.65
+  pk 14.77
+  de 16.04
+  ir 16.37
+  cn 16.41
+  af 16.76
+  fi 19.03
+  fr 22.78
+
+shanjiatun (cn)
+  cn 6.19
+  pk 10.30
+  af 10.41
+  ir 10.45
+  in 11.25
+  za 14.07
+  de 16.11
+  fi 17.01
+  fr 25.17
+```
+An order 3 model with add-1 smoothing can achieve an accuracy of over 68% (see [grid-search.txt](https://github.com/daandouwe/char-lm/blob/master/grid-search.txt)).
+
+We can also plot a confusion matrix of the the trained
+
 # Evaluation
 The students hand in their test-set predictions. They are evaluated by the accuracy on this set. They can use dev-set for development and grid-search. (Highest score gets bonus?)
 

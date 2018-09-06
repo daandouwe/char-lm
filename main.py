@@ -144,7 +144,7 @@ def main(args):
     accuracy = evaluate(gold, pred)
     print(f'Validation accuracy: {accuracy:.2f}')
 
-    path = os.path.join('image', f'confusion.n{args.order}k{args.add_k}.pdf')
+    path = os.path.join('image', f'confusion.n{args.order}k{args.add_k}.png')
     confusion_matrix(gold, pred, out=path)
 
     if args.grid_search:

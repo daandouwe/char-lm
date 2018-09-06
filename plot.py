@@ -20,7 +20,8 @@ def confusion_matrix(gold, pred, out='confusion.pdf'):
     # Set up plot
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    cax = ax.matshow(confusion, vmin=0, vmax=1)
+    # cax = ax.matshow(confusion, vmin=0, vmax=1)
+    cax = ax.matshow(confusion)
     fig.colorbar(cax)
 
     # Set up axes

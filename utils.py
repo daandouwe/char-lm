@@ -3,7 +3,7 @@ import codecs
 import string
 
 
-DIR = 'data'
+DIR = 'data/cities'
 
 
 # All characters used in the validation and test sets.
