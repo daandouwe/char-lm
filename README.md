@@ -76,7 +76,8 @@ shanjiatun (cn)
 ```
 An order 3 model with add-1 smoothing can achieve an accuracy of over 68% (see [grid-search.txt](https://github.com/daandouwe/char-lm/blob/master/grid-search.txt)).
 
-We can also plot a confusion matrix of the the trained
+We can also plot a confusion matrix from the predictions:
+![confusion](https://github.com/daandouwe/char-lm/blob/master/image/confusion.n2k1.0.png)
 
 # Evaluation
 The students hand in their test-set predictions. They are evaluated by the accuracy on this set. They can use dev-set for development and grid-search. (Highest score gets bonus?)
