@@ -4,26 +4,25 @@ A simple character ngram language model to illustrate:
   * Smoothing (add-k and interpolation)
   * Perplexity
   * Text production
-  * Text classification
+  * Text classification with perplexity
 
 The code in this repository is based on the homework assignment [Character-based Language Models](http://computational-linguistics-class.org/assignment5.html) and [The unreasonable effectiveness of Character-level Language Models](https://nbviewer.jupyter.org/gist/yoavg/d76121dfde2618422139).
 
 The classification task and data is taken from [Character-based Language Models](http://computational-linguistics-class.org/assignment5.html), and the data to produce text samples is taken from [The Unreasonable Effectiveness of Recurrent Neural Networks](https://karpathy.github.io/2015/05/21/rnn-effectiveness/).
 
 # Setup
-To get the required data for this code, run
+To get the required data for this code, run:
 ```bash
 cd data
 ./get-data.sh
 ```
-from the project directory.
 
 # Usage
 To run a demo, type:
 ```bash
 ./main.py
 ```
-To additionally perform grid-search for the best parameters, type:
+To additionally perform grid-search for smoothing parameters, run:
 ```bash
 ./main.py --grid-search
 ```
@@ -37,7 +36,12 @@ Implement:
   * text-classification (trainging one lm per language)
   * grid-search on dev-set for smoothing parameters
 
-# Text classification
+# Text production
+```
+Under construction
+```
+
+# City classification
 The character language model can be used to classify text. Have a look at the `cities` dataset. For each country in the training dataset (`af`, `cn`, `de`, `fi`, `fr`, `in`, `ir`, `pk`, `za`) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
 
 Here's an example of scores on the dev-set (true country is listed between brackets):
@@ -79,6 +83,11 @@ An order 3 model with add-1 smoothing can achieve an accuracy of over 68% (see [
 
 We can also plot a confusion matrix from the predictions:
 ![confusion](https://github.com/daandouwe/char-lm/blob/master/image/confusion.n2k1.0.png)
+
+# Name classification
+```
+Under construction
+```
 
 # Evaluation
 The students hand in their test-set predictions. They are evaluated by the accuracy on this set. They can use dev-set for development and grid-search. (Highest score gets bonus?)
