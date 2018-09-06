@@ -163,9 +163,10 @@ def main(args):
                 print(f'order {order}  k {k:>5.2f}  acc {acc:.2f}', file=f)
 
     if args.plot_grid:
+        path = os.path.join('image', 'grid.pdf')
         xy, zs = zip(*accuracies)
         xs, ys = zip(*xy)
-        plot_grid(xs, ys, zs)
+        plot_grid(xs, ys, zs, out=path)
 
 
 if __name__ == '__main__':
