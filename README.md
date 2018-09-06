@@ -87,5 +87,7 @@ The students hand in their test-set predictions. They are evaluated by the accur
 * Authorship attribution: [Language Independent Authorship Attribution using Character Level Language Models](http://www.aclweb.org/anthology/E/E03/E03-1053.pdf)
 
 # TODO
-- [ ] Add-k smoothing
+- [X] Add-k smoothing
 - [ ] Interpolation smoothing (backoff, Witten-Bell)
+- [ ] Train lm on shakespeare and linux
+- [ ] Sample text
