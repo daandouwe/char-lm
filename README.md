@@ -13,6 +13,7 @@ The classification task and data is taken from [Character-based Language Models]
 # Setup
 To get the required data for this code, run
 ```bash
+cd data
 ./get-data.sh
 ```
 from the project directory.
