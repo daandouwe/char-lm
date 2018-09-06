@@ -1,0 +1,12 @@
+order 3  k  1.00  acc 68.33
+order 2  k  1.00  acc 67.56
+order 1  k 10.00  acc 65.67
+order 2  k  0.10  acc 65.33
+order 1  k  1.00  acc 65.00
+order 1  k  0.10  acc 64.89
+order 1  k  0.01  acc 64.78
+order 2  k 10.00  acc 64.56
+order 3  k  0.10  acc 64.11
+order 3  k 10.00  acc 61.56
+order 2  k  0.01  acc 60.89
+order 3  k  0.01  acc 60.00
