@@ -17,8 +17,8 @@ def confusion_matrix(gold, pred, out='confusion.pdf'):
         confusion[c2i[g]][c2i[p]] += 1
 
     # Normalize by dividing every row by its sum
-    confusion += 1
-    confusion = confusion / confusion.sum(1)
+    confusion += 1  # avoid divison by zero
+    confusion = confusion / confusion.sum(axis=1)[:, np.newaxis]
 
     # Set up plot
     fig = plt.figure()
