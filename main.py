@@ -77,7 +77,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('dataset', choices=['cities', 'names'])
+    parser.add_argument('mode', choices=['classify'])
+    parser.add_argument('--dataset', default='cities', choices=['cities', 'names'])
     parser.add_argument('--data', type=str, default='data')
     parser.add_argument('--interpolate', action='store_true')
     parser.add_argument('--grid-search', action='store_true')
