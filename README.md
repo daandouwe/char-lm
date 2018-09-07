@@ -26,7 +26,7 @@ For the `names` dataset, type:
 ```bash
 ./main.py classify --dataset names --interpolate
 ```
-Choose the order and add-k smoothing with
+Choose the order and add-k smoothing with:
 ```bash
 --order 3 --add-k 1
 ```
@@ -98,7 +98,7 @@ We can also plot a confusion matrix from the predictions:
 ![confusion](https://github.com/daandouwe/char-lm/blob/master/image/confusion.cities.interpolate.png)
 
 # Name classification
-Have a look at the [names](https://github.com/daandouwe/char-lm/tree/master/data/names/train) dataset. For each language in the training dataset (18 in total) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
+Have a look at the [names](https://github.com/daandouwe/char-lm/tree/master/data/names/train) dataset. This dataset consists of 18 languages and names for each.
 
 The data is taken from the PyTorch tutorial [Classifying Names with a Character-Level RNN](https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) (PyTorch tutorial).
 
