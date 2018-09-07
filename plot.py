@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pylab as plt
 import matplotlib.ticker as ticker
 
+EPS = 1e-45  # Fudge factor.
+
 
 def confusion_matrix(gold, pred, out='confusion.pdf'):
 
@@ -15,6 +17,7 @@ def confusion_matrix(gold, pred, out='confusion.pdf'):
         confusion[c2i[g]][c2i[p]] += 1
 
     # Normalize by dividing every row by its sum
+    confusion += 1
     confusion = confusion / confusion.sum(1)
 
     # Set up plot

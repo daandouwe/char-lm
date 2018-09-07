@@ -3,17 +3,14 @@ import codecs
 import string
 
 
-DIR = 'data/cities'
+NAMES_DIR = 'names'
 
+CITIES_DIR = 'cities'
 
-# All characters used in the validation and test sets.
-DATA_CHARS = set(
-    [line.strip() for line in open(os.path.join(DIR, 'val', 'cities_val.txt')).readlines()] + \
-    [line.strip() for line in open(os.path.join(DIR, 'test', 'cities_test.txt')).readlines()]
-)
 
 # Which is the same as this set.
 CHARS = set(string.ascii_lowercase + "~-'`" + ' ' + '0123568' + '()')
+
 
 PAD_CHAR = '~'
 
@@ -29,6 +26,23 @@ COUNTRIES = [
     'pk',
     'za'
 ]
+
+
+LANGUAGES = [
+    'Arabic',     'English',    'Irish',      'Polish',
+    'Chinese',    'French',     'Italian',    'Portuguese',
+    'Czech',      'German',     'Japanese',   'Russian',
+    'Dutch',      'Greek',      'Korean',     'Scottish',
+    'Spanish',    'Vietnamese'
+]
+
+
+# All characters used in the validation and test sets.
+def all_chars(NAME):
+    all_lines = \
+        [line.strip() for line in open(os.path.join('data', NAME, 'val', f'{NAME}_val.txt')).readlines()] + \
+        [line.strip() for line in open(os.path.join('data', NAME, 'test', f'{NAME}_test.txt')).readlines()]
+    return set('~'.join(all_lines))
 
 
 def read_train(path, order):
@@ -55,22 +69,6 @@ def test_open(dir):
     with open(path) as f:
         data = f.read()
     print(data)
-
-
-def make_utf8(dir):
-    """The original data throws decoding errors."""
-    for set in ('train', 'val'):
-        for country in COUNTRIES:
-            path = os.path.join(dir, set, f'{country}.txt')
-            with codecs.open(path, "r", encoding='utf-8', errors='ignore') as fdata:
-                data = fdata.read()
-            with open(path, 'w') as f:
-                print(data, file=f, end='')
-    path = os.path.join(dir, 'test', 'cities_test.txt')
-    with codecs.open(path, "r", encoding='utf-8', errors='ignore') as fdata:
-        data = fdata.read()
-    with open(path, 'w') as f:
-        print(data, file=f, end='')
 
 
 if __name__ == '__main__':

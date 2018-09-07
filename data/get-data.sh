@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+# !/usr/bin/env bash
 
-mkdir -p cities/test
+mkdir cities
+mkdir cities/test
 
-# Get cities dataset.
+# 1. Prepare cities dataset.
 wget http://computational-linguistics-class.org/downloads/hw5/cities_train.zip
 wget http://computational-linguistics-class.org/downloads/hw5/cities_val.zip
 wget http://computational-linguistics-class.org/downloads/hw5/cities_test.txt
@@ -13,21 +14,30 @@ mv train cities
 mv val cities
 mv cities_test.txt cities/test
 
+# Fix some none utf-8 encodings.
+./make-cities-utf8.py cities
+
 # Make a dev-set like the test-set.
 python process.py
 mkdir cities/val/countries
 mv cities/val/{af,cn,de,fi,fr,in,ir,pk,za}.txt cities/val/countries
 
-# Get names dataset.
+
+# 2. Prepare names dataset.
+mkdir names
 wget https://download.pytorch.org/tutorial/data.zip
 unzip -q data.zip
-mv data/names names
+mv data/names/* names
 rm data.zip
 rm -r data
 
-# TODO: make train/dev/test split
+# Make train/dev/test splits.
+mkdir names/train names/val names/test
+./make-name-data.py names
+rm names/*.txt
 
-# Get karpathy's shakespeare and linux datasets.
+
+# 3. Get karpathy's shakespeare and linux datasets.
 # mkdir shakespeare linux
 # wget http://cs.stanford.edu/people/karpathy/char-rnn/shakespeare_input.txt
 # wget http://cs.stanford.edu/people/karpathy/char-rnn/linux_input.txt
