@@ -3,32 +3,24 @@ import argparse
 import os
 import string
 from collections import defaultdict, Counter
-import codecs
 import itertools
 
 import numpy as np
 
 from plot import confusion_matrix, plot_grid
-from utils import DIR, CHARS, COUNTRIES
+from utils import DIR, CHARS, COUNTRIES, PAD_CHAR, read_train, read_test
+from model import CharNgram
 
 
-PAD_CHAR = '~'
+def train_char_lm(path, order, k, interpolate):
+    model = CharNgram(order=order, vocab=CHARS)
+    model.train(path, add_k=k)
+    if interpolate:
+        model.interpolate()
+    return model
 
 
-def read_train(path, order):
-    with open(path) as f:
-        data = f.readlines()
-    pad = PAD_CHAR * order
-    data = ''.join((pad + line.strip() for line in data))
-    return data
-
-
-def read_test(path):
-    with open(path) as f:
-        return [line.strip() for line in f.readlines()]
-
-
-def train_char_lm(path, order=3, k=1):
+def train_char_lm_(path, order=3, k=1):
     def normalize(counter):
         s = float(sum(counter.values()))
         return dict((c, cnt/s) for c, cnt in counter.items())
@@ -37,7 +29,6 @@ def train_char_lm(path, order=3, k=1):
         all_histories = list(itertools.product(CHARS, repeat=order))
         all_histories += list(lm.keys())
         all_histories = set(all_histories)
-        # print('Number of possible histories:', len(all_histories))
         for history in all_histories:
             history = ''.join(history)
             for char in CHARS:
@@ -55,12 +46,12 @@ def train_char_lm(path, order=3, k=1):
     return outlm
 
 
-def train_models(data_dir, order, k):
+def train_models(data_dir, order, k, interpolate):
     models = dict()
     for country in COUNTRIES:
         # print(country)
         path = os.path.join(data_dir, 'train', f'{country}.txt')
-        lm = train_char_lm(path, order, k)
+        lm = train_char_lm(path, order, k, interpolate)
         models[country] = lm
     return models
 
@@ -71,7 +62,8 @@ def perplexity(data, lm, order):
     data = pad + data + pad
     for i in range(len(data)-order):
         history, char = data[i:i+order], data[i+order]
-        prob = lm[history][char]
+        prob = lm.prob(history, char)
+        # prob = lm[history][char]
         logprob += np.log(prob)
     logprob /= (i + 1)
     return np.exp(-logprob)
@@ -112,9 +104,11 @@ def evaluate(gold, pred):
     return 100 * sum(p == g for p, g in zip(gold, pred)) / len(pred)
 
 
-def grid_search(data_dir, cities, gold, orders, ks):
+def grid_search(data_dir, cities, gold, orders, ks, random=False):
     accuracies = dict()
     for order in orders:
+        if random:
+            ks = np.random.uniform(0, 10, 10)
         for k in ks:
             print(f'order {order} k {k:>5.2f}')
             models = train_models(data_dir, order, k)
@@ -126,7 +120,7 @@ def grid_search(data_dir, cities, gold, orders, ks):
 
 
 def main(args):
-    models = train_models(args.data, args.order, args.add_k)
+    models = train_models(args.data, args.order, args.add_k, args.interpolate)
 
     cities_path = os.path.join(args.data, 'val', 'cities_val.txt')
     labels_path = os.path.join(args.data, 'val', 'labels_val.txt')
@@ -151,7 +145,9 @@ def main(args):
         print('Grid search to find best parameters...')
         accuracies = grid_search(
             args.data, cities, gold,
-            orders=(1, 2, 3), ks=(0.01, 0.1, 1, 10)
+            orders=(1, 2, 3, 4, 5, 6),
+            ks=(0.01, 0.1, 1, 10),
+            random=args.random_grid
         )
         accuracies = Counter(accuracies).most_common()
         print('Results:')
@@ -166,16 +162,18 @@ def main(args):
         path = os.path.join('image', 'grid.pdf')
         xy, zs = zip(*accuracies)
         xs, ys = zip(*xy)
-        plot_grid(xs, ys, zs, out=path)
+        plot_grid(xs, ys, zs, out=path, random=args.random_grid)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=str, default=DIR)
+    parser.add_argument('--interpolate', action='store_true')
     parser.add_argument('--grid-search', action='store_true')
+    parser.add_argument('--random-grid', action='store_true')
     parser.add_argument('--plot-grid', action='store_true')
     parser.add_argument('-n', '--order', type=int, default=2)
-    parser.add_argument('-k', '--add_k', type=float, default=1)
+    parser.add_argument('-k', '--add_k', type=float, default=0)
     args = parser.parse_args()
 
     main(args)

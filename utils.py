@@ -15,6 +15,8 @@ DATA_CHARS = set(
 # Which is the same as this set.
 CHARS = set(string.ascii_lowercase + "~-'`" + ' ' + '0123568' + '()')
 
+PAD_CHAR = '~'
+
 
 COUNTRIES = [
     'af',
@@ -27,6 +29,19 @@ COUNTRIES = [
     'pk',
     'za'
 ]
+
+
+def read_train(path, order):
+    with open(path) as f:
+        data = f.readlines()
+    pad = PAD_CHAR * order
+    data = ''.join((pad + line.strip() for line in data))
+    return data
+
+
+def read_test(path):
+    with open(path) as f:
+        return [line.strip() for line in f.readlines()]
 
 
 def test_open(dir):

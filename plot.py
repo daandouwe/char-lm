@@ -36,21 +36,19 @@ def confusion_matrix(gold, pred, out='confusion.pdf'):
     plt.savefig(out)
 
 
-def plot_grid(xs, ys, zs, out='grid.pdf'):
+def plot_grid(xs, ys, zs, out='grid.pdf', random=False):
     range = max(zs) - min(zs)
     scale = lambda x: (x - min(zs)) / range
 
     fig, ax = plt.subplots()
-    area = [30 * scale(z) for z in zs]  # 0 to 15 point radii
-    alpha = [scale(z) for z in zs]  # 0 to 15 point radii
+    area = [60 * np.exp(3*scale(z)) for z in zs]
+    alphas = [scale(z) for z in zs]
 
-    alphas = np.linspace(0.1, 1, len(xs))
-    rgba_colors = np.zeros((len(xs), 4))
-    # for red the first column needs to be one
-    rgba_colors[:,0] = 1.0
-    # the fourth column needs to be you
+    rgba_colors = np.zeros((len(xs), 4))  # 4 channels, one alpha
+    rgba_colors[:,0] = 1.0  # color red
     rgba_colors[:, 3] = alphas
 
     ax.scatter(xs, ys, s=area, color=rgba_colors)
-    ax.set_yscale('log')
+    if not random:
+        ax.set_yscale('log')
     plt.savefig(out)
