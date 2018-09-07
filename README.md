@@ -18,13 +18,21 @@ cd data
 ```
 
 # Usage
-To run a demo, type:
+To run a classification demo on the `cities` dataset, type:
 ```bash
-./main.py cities --interpolate
+./main.py classify --interpolate
 ```
-To additionally perform grid-search for smoothing parameters, run:
+For the `names` dataset, type:
 ```bash
-./main.py cities --interpolate --grid-search
+./main.py classify --dataset names --interpolate
+```
+Choose the order and add-k smoothing with
+```bash
+--order 3 --add-k 1
+```
+To additionally perform grid-search for smoothing parameters, add:
+```bash
+--grid-search
 ```
 
 # Excercises
