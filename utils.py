@@ -53,21 +53,3 @@ def read_train(path, order):
 def read_test(path):
     with open(path) as f:
         return [line.strip() for line in f.readlines()]
-
-
-def test_open(dir):
-    for set in ('train', 'val'):
-        for country in COUNTRIES:
-            path = os.path.join(dir, set, f'{country}.txt')
-            with open(path) as f:
-                data = f.read()
-            print(data)
-    path = os.path.join(dir, 'test', 'cities_test.txt')
-    with open(path) as f:
-        data = f.read()
-    print(data)
-
-
-if __name__ == '__main__':
-    make_utf8(DIR)
-    test_open(DIR)
