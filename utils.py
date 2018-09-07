@@ -35,10 +35,10 @@ LANGUAGES = [
 
 
 # All characters used in the validation and test sets.
-def all_chars(NAME):
+def all_chars(name):
     all_lines = \
-        [line.strip() for line in open(os.path.join('data', NAME, 'val', f'{NAME}_val.txt')).readlines()] + \
-        [line.strip() for line in open(os.path.join('data', NAME, 'test', f'{NAME}_test.txt')).readlines()]
+        [line.strip() for line in open(os.path.join('data', name, 'val', f'{name}_val.txt')).readlines()] + \
+        [line.strip() for line in open(os.path.join('data', name, 'test', f'{name}_test.txt')).readlines()]
     return set('~'.join(all_lines))
 
 
