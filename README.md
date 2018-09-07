@@ -92,7 +92,7 @@ shanjiatun (cn)
 
 Validation accuracy: 67.32
 ```
-An order 3 model with add-1 smoothing can achieve an accuracy of over 68% (see [grid-search.txt](https://github.com/daandouwe/char-lm/blob/master/grid-search.txt)).
+An order 3 model with add-1 smoothing can achieve an accuracy of over 68% (see [grid-search.txt](https://github.com/daandouwe/char-lm/blob/master/grid-search-large.txt)).
 
 We can also plot a confusion matrix from the predictions:
 ![confusion](https://github.com/daandouwe/char-lm/blob/master/image/confusion.cities.interpolate.png)
