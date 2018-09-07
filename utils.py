@@ -5,11 +5,8 @@ import string
 
 NAMES_DIR = 'names'
 
+
 CITIES_DIR = 'cities'
-
-
-# Which is the same as this set.
-CHARS = set(string.ascii_lowercase + "~-'`" + ' ' + '0123568' + '()')
 
 
 PAD_CHAR = '~'
