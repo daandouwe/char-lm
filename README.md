@@ -20,20 +20,20 @@ cd data
 # Usage
 To run a demo, type:
 ```bash
-./main.py
+./main.py cities --interpolate
 ```
 To additionally perform grid-search for smoothing parameters, run:
 ```bash
-./main.py --grid-search
+./main.py cities --interpolate --grid-search
 ```
 
 # Excercises
-Implement:
+Students implement:
   * text-sampling
-  * perplexity
+  * perplexity computation
   * add-k smoothing
-  * interpolation smoothing (and Witten-Bell)
-  * text-classification (trainging one lm per language)
+  * interpolation smoothing (and Witten-Bell lambda rule for interpolation)
+  * text-classification (training one lm per language)
   * grid-search on dev-set for smoothing parameters
 
 # Text production
@@ -43,6 +43,8 @@ Under construction
 
 # City classification
 The character language model can be used to classify text. Have a look at the [cities](https://github.com/daandouwe/char-lm/tree/master/data/cities/train) dataset. For each country in the training dataset (`af`, `cn`, `de`, `fi`, `fr`, `in`, `ir`, `pk`, `za`) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
+
+The data (and idea) is taken from the homework assignment [Character-based Language Models](http://computational-linguistics-class.org/assignment5.html).
 
 Here's an example of scores on the dev-set (true country is listed between brackets):
 ```
@@ -88,6 +90,11 @@ We can also plot a confusion matrix from the predictions:
 ![confusion](https://github.com/daandouwe/char-lm/blob/master/image/confusion.cities.interpolate.png)
 
 # Name classification
+Have a look at the [names](https://github.com/daandouwe/char-lm/tree/master/data/names/train) dataset. For each language in the training dataset (18 in total) we train a char-lm (with smoothing) on the list of given cities. During prediction, we choose the country with the lowest perplexity.
+
+The data is taken from the PyTorch tutorial [Classifying Names with a Character-Level RNN](https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) (PyTorch tutorial).
+
+Here's an example of scores on the dev-set (true language is listed between brackets):
 ```
 Some predictions:
 Agadjanov (Russian)
@@ -219,11 +226,10 @@ We can also plot a confusion matrix from the predictions:
 The students hand in their test-set predictions. They are evaluated by the accuracy on this set. They can use dev-set for development and grid-search. (Highest score gets bonus?)
 
 # More applications
-* Name classification: [Classifying Names with a Character-Level RNN](https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) (PyTorch tutorial)
 * Authorship attribution: [Language Independent Authorship Attribution using Character Level Language Models](http://www.aclweb.org/anthology/E/E03/E03-1053.pdf)
 
 # TODO
 - [X] Add-k smoothing
-- [ ] Interpolation smoothing (backoff, Witten-Bell)
+- [X] Interpolation smoothing (backoff, Witten-Bell)
 - [ ] Train lm on shakespeare and linux
 - [ ] Sample text
