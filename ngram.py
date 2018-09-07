@@ -71,9 +71,8 @@ class CharNgram(dict):
     def _smooth_interpolate(self, history, char):
         lmbda = self.witten_bell(history)
         if self.is_unigram:
-            lmbda = 0.5  # TODO
             higher = self.get(char, 0)
-            lower = 1.0 / self.vocab_size
+            lower = 1.0 / self.vocab_size  # uniform model
             prob = lmbda * higher + (1 - lmbda) * lower
         else:
             try:
@@ -93,7 +92,7 @@ class CharNgram(dict):
             total = sum(self.counts.get(history, dict()).values())
         if unique_follows == 0:
             if total == 0:
-                frac = 1  # n/n = 1 as n -> 0
+                frac = 1  # see limit: n/n -> 1 as n -> 0
             else:
                 frac = 0
         else:
@@ -102,32 +101,12 @@ class CharNgram(dict):
 
     def prob(self, history, char):
         if self._add_k:
-            return self._smooth_add_k(history, char)
-        if self._interpolate:
-            return self._smooth_interpolate(history, char)
+            prob = self._smooth_add_k(history, char)
+        elif self._interpolate:
+            prob = self._smooth_interpolate(history, char)
         else:
-            dist = self.get(history, 0)
-            if not dist:
-                return 0
-            else:
-                return dist.get(char, 0)
-
-
-if __name__ == '__main__':
-    from utils import DIR, CHARS, PAD_CHAR
-    if len(sys.argv) > 1:
-        order = int(sys.argv[1])
-    else:
-        order = 3
-
-    model = CharNgram(order=order, vocab=CHARS)
-    path = os.path.join(DIR, 'train', 'de.txt')
-    model.train(path)
-
-    model.interpolate()
-    total = 0
-    for char in model.vocab:
-        prob = model.prob(order*PAD_CHAR, char)
-        total += prob
-    print(total)
-    lmbda = model.witten_bell(order*PAD_CHAR, char)
+            try:
+                prob = self[history][char]
+            except KeryError:
+                prob = 0
+        return prob

@@ -648,7 +648,7 @@ English
 Russian
 French
 Arabic
-Irish
+English
 Russian
 Russian
 Russian
