@@ -2,12 +2,13 @@ import numpy as np
 import matplotlib.pylab as plt
 import matplotlib.ticker as ticker
 
-EPS = 1e-45  # Fudge factor.
-
 
 def confusion_matrix(gold, pred, out='confusion.pdf'):
+    assert len(gold) == len(pred), f'inconsistent lengths: gold {len(gold)}  pred {len(pred)}'
+    assert set(pred) <= set(gold)
 
     all_categories = sorted(list(set(gold)))
+
     n_categories = len(all_categories)
     c2i = dict((c, i) for i, c in enumerate(all_categories))
 
@@ -40,6 +41,8 @@ def confusion_matrix(gold, pred, out='confusion.pdf'):
 
 
 def plot_grid(xs, ys, zs, out='grid.pdf', random=False):
+    assert len(xs) == len(ys) == len(zs), f'inconsistent lengths: xs {len(xs)}  ys {len(ys)}  zs {len(zs)}'
+
     range = max(zs) - min(zs)
     scale = lambda x: (x - min(zs)) / range
 
